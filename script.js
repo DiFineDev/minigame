@@ -28,6 +28,7 @@ function game() {
                 }
                 alert('Спасибо за игру, хорошего дня!');
             } 
+            
             else {
                 alert('Игра окончена!');
             }
@@ -53,7 +54,8 @@ function game() {
                 return answer;        
             }
             else {
-                getAnswer();
+                alert('Это не число, введите число');
+                checkAnswer();
             }
         }
     }
