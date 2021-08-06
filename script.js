@@ -1,44 +1,64 @@
 alert('Угадай число от 1 до 100');
 
-game();
 
 function game() {
+
     let hiddenNumber = Math.floor(Math.random() * 101);
-
-    checkAnswer();
-
+    let attempts = 10;
+    
     function checkAnswer(){
+
         let userAnswer = getAnswer();
         
-        if (userAnswer < hiddenNumber) {
-            alert('Загаданное число больше');
-            checkAnswer();
-        }
-        else if (userAnswer > hiddenNumber){
-            alert('Загаданное число меньше');
-            checkAnswer();
-        }
-        else if (+userAnswer === hiddenNumber){
-            alert('Вы угадали число!');
-        } else {
-            alert('Игра окончена');
-        }
-    }
-
-    function getAnswer(){
-        let answer = prompt('Введите число');
-
-        if (answer === null) {
-            return;
-        }
-        else if (answer.trim() === ''){
-            getAnswer();
-        }
-        else if (!isNaN(answer)) {
-            return answer;        
-        }
+        if (attempts > 1) {
+            if (userAnswer < hiddenNumber) {
+                attempts--;
+                alert(`Загаданное число больше, количество попыток: ${attempts}` );
+                checkAnswer();
+            }
+            else if (userAnswer > hiddenNumber){
+                attempts--;
+                alert(`Загаданное число меньше, количество попыток: ${attempts}` );
+                checkAnswer();
+            }
+            else if (+userAnswer === hiddenNumber){
+                let nextGame = confirm('Вы угадали число! Хотите сыграть ещё?');
+                if (nextGame) {
+                    game();
+                }
+                alert('Спасибо за игру, хорошего дня!');
+            } 
+            else {
+                alert('Игра окончена!');
+            }
+        } 
         else {
-            getAnswer();
+            let nextGame = confirm('Попытки закончились! Хотите сыграть ещё?');
+            if (nextGame) {
+                game();
+            }
+            alert('Спасибо за игру, хорошего дня!');
+        }
+    
+        function getAnswer(){
+            let answer = prompt('Введите число');
+            
+            if (answer === null) {
+                return;
+            }
+            else if (answer.trim() === ''){
+                getAnswer();
+            }
+            else if (!isNaN(answer)) {
+                return answer;        
+            }
+            else {
+                getAnswer();
+            }
         }
     }
+
+    checkAnswer();
 }
+
+game();
